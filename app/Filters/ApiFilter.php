@@ -1,25 +1,15 @@
 <?php
 
-namespace App\Services\V1;
+namespace App\Filters;
 
 use Illuminate\Http\Request;
 
-class CustomerQuery
+class ApiFilter
 {
-    protected $avaibleParams = [
-        'name' => ['eq'],
-        'type' => ['eq'],
-        'email' => ['eq'],
-        'address' => ['eq'],
-        'city' => ['eq'],
-        'state' => ['eq'],
-        'postalCode' => ['eq', 'gt', 'lt']
 
-    ];
+    protected $avaibleParams = [];
 
-    protected $tableColumnMap = [
-        'postalCode' => "postal_code"
-    ];
+    protected $tableColumnMap = [];
 
     protected $operatorMap = [
         'eq' => '=',
@@ -32,10 +22,11 @@ class CustomerQuery
     public function transform(Request $request)
     {
         $mainQuery = [];
+
         foreach ($this->avaibleParams as $param => $operators) {
             $query = $request->query($param);
 
-            if (isset($query)) {
+            if (!isset($query)) {
                 continue;
             }
 
