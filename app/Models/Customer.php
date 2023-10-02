@@ -9,8 +9,19 @@ class Customer extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+        'type',
+        'email  ',
+        'address',
+        'city',
+        'state',
+        'postal_code',
+    ];
+
     //One to Many Relationship chainment, look at Invoice.php
-    public function invoices(){
+    public function invoices()
+    {
         return $this->hasMany(Invoice::class);
     }
 }
